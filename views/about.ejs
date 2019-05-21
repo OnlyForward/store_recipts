@@ -1,0 +1,42 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Document</title>
+
+    <%- include('includes/header.ejs') %>
+
+
+</head>
+
+<body>
+    <div class="wrapper">
+        <%- include('includes/navigation.ejs') %>
+        <div id="content">
+            <%- include('includes/navigation_nav.ejs') %>
+
+            <div class="container">
+
+                <ul class="list-group">
+
+                    <li class="list-group-item list-group-item-action">Приложение использует sequlize для работы с базой
+                        данных mysql</li>
+                    <li class="list-group-item list-group-item-action">Приложение использует multer для загрухки
+                        картинок</li>
+                    <li class="list-group-item list-group-item-action">Приложение использует express, router, bodyparser
+                        для обработки информации</li>
+                    <li class="list-group-item list-group-item-action">Приложение использует bootstrap для добавления
+                        дизайна</li>
+                    <li class="list-group-item list-group-item-action">Прилложение использует jquery для обработки
+                        действий пользователя</li>
+                    <li class="list-group-item list-group-item-action">Используются стандарные средства Js для удаления файлов</li>
+                    <li class="list-group-item list-group-item-action">ИСпользуется electron</li>
+                </ul>
+            </div>
+            <p class="mt-5">
+                Выполнил: Шибанов Д.Ю 3-42
+            </p>
+        </div>
+    </div>
+    <div class="overlay"></div>
+    <%- include('includes/end.ejs') %>

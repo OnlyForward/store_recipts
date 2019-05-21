@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <%- include('includes/header') %>
+    <script>var a = 12;</script>
+    <script>
+        $(document).on("click", ".remove1", function () {
+            var clickedBtnID = $(this).attr('id');
+            if (clickedBtnID.startsWith("delete")) {
+                let number = clickedBtnID.replace("delete","");
+                $(`#step${number}`).remove();
+            }
+        });
+    </script>
+    <style>
+        .remove1 {}
+    </style>
+
+</head>
+
+<body>
+    <div class="wrapper">
+
+        <%- include('includes/navigation') %>
+        <div id="content">
+
+            <%- include('includes/navigation_nav') %>
+
+            <div class="container">
+
+                <form action="<% if (action){ %>/update/<% }else{ %>/create/<% } %>" method="post"
+                    enctype="multipart/form-data">
+
+                    <h3 class="h3 text-center my-4">Создание рецепта</h3>
+
+                    <div class="form-group">
+
+                        <div class="input-group  my-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-pizza-slice"></i></span>
+                            </div>
+                            <input type="text" name="name" id="name" class="form-control" placeholder="Название"
+                                value="<% if (action) { %><%= recipe.title %><% } %>">
+                        </div>
+
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
+                            </div>
+                            <textarea name="description" id="description" rows="10" class="form-control"
+                                placeholder="Описание"><% if (action) { %><%= recipe.description %><% } %></textarea>
+                        </div>
+
+                        <div class="input-group my-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-images"></i></span>
+                            </div>
+                            <input type="file" name="imageUrl" id="imageUrl" class="form-control-file"
+                                placeholder="изображение" value="<% if (action) { %><%= recipe.imageUrl %><% } %>">
+                        </div>
+                        <% if(action){ %>
+                        <div class="row">
+                            <img src="/<%= recipe.imageUrl %>" alt="Responsive image" class="img-fluid"
+                                style="max-height: 120px">
+                        </div>
+                        <% } %>
+                    </div>
+
+                    <h1 class="display-4"> Шаги для рецептов <a class="btn btn-outline-primary" id="add">+</a></h1>
+                    <ul class="list-group" id="list_of_steps">
+                        <% if(!action){ %>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-10">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
+                                        </div>
+                                        <textarea name="description_step" id="description0" rows="5"
+                                            class="form-control" placeholder="Описание"></textarea>
+                                    </div>
+
+                                    <div class="input-group my-4">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-images"></i></span>
+                                        </div>
+                                        <input type="file" name="imageUrl_step" id="imageUrl0" class="form-control-file"
+                                            placeholder="изображение">
+                                    </div>
+
+                                </div>
+                                <div class="col-2">
+                                    <a class="btn btn-outline-danger p-3 align-middle" id="delete">-</a>
+                                </div>
+                            </div>
+                        </li>
+                        <% }else{ %>
+                        <% for(let i=0;i<steps.length;i++){ %>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
+                                        </div>
+                                        <textarea name="description_step" id="description<%= i %>" rows="5"
+                                            class="form-control"
+                                            placeholder="Описание"><%= steps[i].description %></textarea>
+                                    </div>
+                                    <div class="input-group my-4">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-images"></i></span>
+                                        </div>
+                                        <input type="file" name="imageUrl_step" id="imageUrl0" class="form-control-file"
+                                            placeholder="изображение" value="<%= steps[i].imageUrl %>">
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <img src="/<%= steps[i].imageUrl %>" alt="Responsive image" class="img-fluid"
+                                        style="max-height: 120px">
+                                </div>
+                                <div class="col-2">
+                                    <a class="btn btn-outline-danger p-3 align-middle" id="delete">-</a>
+                                </div>
+                            </div>
+                        </li>
+                        <% } %>
+                        <% } %>
+                    </ul>
+
+                    <% if(action){ %>
+                    <input type="hidden" name="productId" value="<% if (action) { %><%= recipe.id %><% } %>">
+                    <% } %>
+                    <input type="submit" class="btn btn-info btn-block  my-3"
+                        value="<% if (action) { %>обновить<% } else { %>создать<% } %>">
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <div class="overlay"></div>
+    </div>
+
+    <script charset="utf-8" type="text/javascript">
+
+        $("#add").on("click", function (event) {
+            a = a + 1;
+            event.preventDefault();
+            console.log(a);
+            alert(a);
+            $("#list_of_steps").append(`<div id="step${a}">
+            <li class="list-group-item">
+    <div class="row">
+        <div class="col-10">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-align-justify"></i></span>
+                </div>
+                <textarea name="description_step" id="description${a}" rows="5" class="form-control"
+                    placeholder="Описание"></textarea>
+            </div>
+
+            <div class="input-group my-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-images"></i></span>
+                </div>
+                <input type="file" name="imageUrl_step" id="imageUrl${a}" class="form-control-file" placeholder="изображение">
+            </div>
+        </div>
+        <div class="col-2">
+            <div>
+                <a class="btn btn-outline-danger p-3 align-middle remove1" id="delete${a}">-</a>
+            </div>
+        </div>
+    </div>
+</li>
+</div>`);
+            window.releaseEvents();
+            return false;
+        });
+    </script>
+
+    <%- include('includes/end') %>

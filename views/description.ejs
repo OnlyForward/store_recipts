@@ -1,0 +1,73 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Document</title>
+
+    <%- include('includes/header.ejs') %>
+
+
+</head>
+
+<body>
+    <div class="wrapper">
+        <%- include('includes/navigation.ejs') %>
+        <div id="content">
+            <%- include('includes/navigation_nav.ejs') %>
+
+
+            <div class="container">
+                <div class="col-md-8 mx-auto">
+                    <img src="/<%= recipe.imageUrl %>" alt="Responsive image" class="img-fluid">
+
+                </div>
+            </div>
+
+            <div class="container">
+                <h3 class="display-4"><%= recipe.title %></h3>
+                <p>
+                    <%= recipe.description %>
+                </p>
+            </div>
+
+
+
+
+            <div class="container">
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <% steps.forEach(item=>{ %>
+
+                        <div class="carousel-item <% if (item.step == 0){ %>active<% } %>">
+                            <img src="/<%= item.imageUrl %>" class="d-block w-100" alt="..." style="max-height: 340px">
+                            <div class="carousel-caption">
+                                <p style="color: white"><%= item.description %></p>
+                            </div>
+                        </div>
+
+                        <% }) %>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="overlay"></div>
+    <%- include('includes/end.ejs') %>
+
+</body>
+
+</html>
